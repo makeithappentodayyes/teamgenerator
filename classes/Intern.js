@@ -1,4 +1,4 @@
-var Intern = require('./Employe')
+var Employe = require('./Employe')
 
 class Intern extends Employe{
 constructor(name,id,email,school){
