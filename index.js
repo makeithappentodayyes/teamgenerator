@@ -103,6 +103,7 @@ function managerdetails() {
       var html =
       `<div class="card" style="width: 18rem;">
       <div class="card-body">
+      <h2 class = 'card-title'>Manager</h2>
         <h5 class="card-title">${data.name}</h5>
         <p class="card-text">${data.id}</p>
         <p class= "card-text">${data.email}</p>
@@ -119,3 +120,62 @@ function managerdetails() {
       });
     });
 }
+function engineerdetails() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "engineername",
+          messege: "enter engineer name"
+        },
+        {
+          type: "input",
+          name: "engineerid",
+          messege: "enter engineer id"
+        },
+        {
+          type: "input",
+          name: "engineeremail",
+          messege: "enter engineer email"
+        },
+        {
+          type: "input",
+          name: "githubname",
+          messege: "enter github name"
+        }
+      ])
+  
+      .then(function(response) {
+        var engineer = new Engineer(
+          response.engineername,
+          response.engineerid,
+          response.engineeremail,
+          response.githubname
+        );
+        var data = {
+          name: engineer.getname(),
+          id: engineer.getid(),
+          email: engineer.getemail(),
+          github: engineer.getgithub()
+        };
+        var html =
+        `<div class="card" style="width: 18rem;">
+        <div class="card-body">
+        <h2 class = 'card-title'>Engineer</h2>
+          <h5 class="card-title">${data.name}</h5>
+          <p class="card-text">${data.id}</p>
+          <p class= "card-text">${data.email}</p>
+          <p class= "card-text">${data.github}</p>
+        </div>
+      </div>`
+        fs.appendFile("./template/output.html", html, function(error, results) {
+          if (error) {
+            throw error;
+          } else {
+            console.log(data);
+            worker();
+          }
+        });
+      });
+  }
+  
