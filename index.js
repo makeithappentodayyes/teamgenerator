@@ -178,4 +178,61 @@ function engineerdetails() {
         });
       });
   }
+  function interndetails() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "internname",
+          messege: "enter intern name"
+        },
+        {
+          type: "input",
+          name: "internid",
+          messege: "enter intern id"
+        },
+        {
+          type: "input",
+          name: "internemail",
+          messege: "enter intern email"
+        },
+        {
+          type: "input",
+          name: "schoolname",
+          messege: "enter school name"
+        }
+      ])
   
+      .then(function(response) {
+        var intern = new Intern(
+          response.internname,
+          response.internid,
+          response.internemail,
+          response.schoolname
+        );
+        var data = {
+          name: intern.getname(),
+          id: intern.getid(),
+          email: intern.getemail(),
+          schoolname: intern.getschool()
+        };
+        var html =
+        `<div class="card" style="width: 18rem;">
+        <div class="card-body">
+        <h2 class = 'card-title'>Manager</h2>
+          <h5 class="card-title">${data.name}</h5>
+          <p class="card-text">${data.id}</p>
+          <p class= "card-text">${data.email}</p>
+          <p class= "card-text">${data.schoolname}</p>
+        </div>
+      </div>`
+        fs.appendFile("./template/output.html", html, function(error, results) {
+          if (error) {
+            throw error;
+          } else {
+            console.log(data);
+            worker();
+          }
+        });
+      });
+  }
